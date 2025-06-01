@@ -24,6 +24,10 @@
         padding: 30px;
         margin-bottom: 30px;
         box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        display: none;
+      }
+      .active-section {
+        display: block;
       }
       .section-divider {
         height: 2px;
@@ -75,15 +79,54 @@
       }
       .question-item {
         margin-bottom: 15px;
+        display: flex;
+        align-items: center;
       }
-      .question-item input[type="checkbox"] {
-        margin-right: 10px;
+      .response-buttons {
+        display: flex;
+        margin-right: 15px;
       }
-      .print-button {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        z-index: 100;
+      .response-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid #ddd;
+        background: white;
+        font-size: 20px;
+        margin-right: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .yes-btn.selected {
+        background: #4CAF50;
+        color: white;
+        border-color: #4CAF50;
+      }
+      .no-btn.selected {
+        background: #FF5722;
+        color: white;
+        border-color: #FF5722;
+      }
+      .step-navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+      .progress-indicator {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+      .step-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #ddd;
+        margin: 0 5px;
+        cursor: pointer;
+      }
+      .step-dot.active {
+        background: #080685;
       }
     </style>
   </head>
@@ -107,200 +150,352 @@
         <p class="mt-3" style="font-size: 18px;">Complete this checklist monthly to prevent fraud and ensure your hostel is running efficiently.</p>
       </div>
 
+      <!-- Progress indicator -->
+      <div class="progress-indicator">
+        <div class="step-dot active" data-step="1"></div>
+        <div class="step-dot" data-step="2"></div>
+        <div class="step-dot" data-step="3"></div>
+        <div class="step-dot" data-step="4"></div>
+        <div class="step-dot" data-step="5"></div>
+        <div class="step-dot" data-step="6"></div>
+        <div class="step-dot" data-step="7"></div>
+        <div class="step-dot" data-step="8"></div>
+        <div class="step-dot" data-step="9"></div>
+      </div>
+
       <!-- Section 1 -->
-      <div class="checklist-section">
+      <div class="checklist-section active-section" id="section-1">
         <h2 style="color: #080685;">1. Tenant Record Verification</h2>
         <div class="question-item">
-          <input type="checkbox" id="q1_1"> <label for="q1_1">Is there a digital record of all current tenants?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q1_1">✅</button>
+            <button class="response-btn no-btn" data-question="q1_1">❌</button>
+          </div>
+          <label>Is there a digital record of all current tenants?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q1_2"> <label for="q1_2">Are tenant IDs, payment receipts, and contact details uploaded to the system?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q1_2">✅</button>
+            <button class="response-btn no-btn" data-question="q1_2">❌</button>
+          </div>
+          <label>Are tenant IDs, payment receipts, and contact details uploaded to the system?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q1_3"> <label for="q1_3">Are check-in/check-out logs consistent with room assignments?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q1_3">✅</button>
+            <button class="response-btn no-btn" data-question="q1_3">❌</button>
+          </div>
+          <label>Are check-in/check-out logs consistent with room assignments?</label>
         </div>
         
         <div class="benefit-tag">
           <p style="margin-bottom: 0;"><span style="color: #4CAF50; font-weight: bold;">🟢 Why this matters:</span> Ensures transparency and eliminates "ghost tenants" — a common theft tactic by dishonest managers.</p>
         </div>
+        
+        <div class="step-navigation">
+          <div></div>
+          <button class="pill-button next-btn" data-next="2">Next Section</button>
+        </div>
       </div>
 
-      <div class="section-divider"></div>
-
       <!-- Section 2 -->
-      <div class="checklist-section">
+      <div class="checklist-section" id="section-2">
         <h2 style="color: #080685;">2. Room Occupancy and Allocation</h2>
         <div class="question-item">
-          <input type="checkbox" id="q2_1"> <label for="q2_1">Are all rooms accounted for in the Presto Stay system?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q2_1">✅</button>
+            <button class="response-btn no-btn" data-question="q2_1">❌</button>
+          </div>
+          <label>Are all rooms accounted for in the Presto Stay system?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q2_2"> <label for="q2_2">Do digital records match physical occupancy?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q2_2">✅</button>
+            <button class="response-btn no-btn" data-question="q2_2">❌</button>
+          </div>
+          <label>Do digital records match physical occupancy?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q2_3"> <label for="q2_3">Are unoccupied rooms marked clearly in the dashboard?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q2_3">✅</button>
+            <button class="response-btn no-btn" data-question="q2_3">❌</button>
+          </div>
+          <label>Are unoccupied rooms marked clearly in the dashboard?</label>
         </div>
         
         <div class="benefit-tag">
           <p style="margin-bottom: 0;"><span style="color: #4CAF50; font-weight: bold;">🟢 Benefit:</span> Stops unauthorized subletting and hidden income from vacant rooms.</p>
         </div>
+        
+        <div class="step-navigation">
+          <button class="pill-button-alternate prev-btn" data-prev="1">Previous</button>
+          <button class="pill-button next-btn" data-next="3">Next Section</button>
+        </div>
       </div>
 
-      <div class="section-divider"></div>
-
       <!-- Section 3 -->
-      <div class="checklist-section">
+      <div class="checklist-section" id="section-3">
         <h2 style="color: #080685;">3. Payment Reconciliation</h2>
         <div class="question-item">
-          <input type="checkbox" id="q3_1"> <label for="q3_1">Are all payments recorded via the platform or verified third-party systems?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q3_1">✅</button>
+            <button class="response-btn no-btn" data-question="q3_1">❌</button>
+          </div>
+          <label>Are all payments recorded via the platform or verified third-party systems?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q3_2"> <label for="q3_2">Do payment logs match the revenue summary in the portal?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q3_2">✅</button>
+            <button class="response-btn no-btn" data-question="q3_2">❌</button>
+          </div>
+          <label>Do payment logs match the revenue summary in the portal?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q3_3"> <label for="q3_3">Are tenants with arrears clearly flagged?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q3_3">✅</button>
+            <button class="response-btn no-btn" data-question="q3_3">❌</button>
+          </div>
+          <label>Are tenants with arrears clearly flagged?</label>
         </div>
         
         <div class="benefit-tag">
           <p style="margin-bottom: 0;"><span style="color: #921813; font-weight: bold;">🧾 Why this matters:</span> Prevents managers from accepting "off-the-book" payments.</p>
         </div>
+        
+        <div class="step-navigation">
+          <button class="pill-button-alternate prev-btn" data-prev="2">Previous</button>
+          <button class="pill-button next-btn" data-next="4">Next Section</button>
+        </div>
       </div>
 
-      <div class="section-divider"></div>
-
       <!-- Section 4 -->
-      <div class="checklist-section">
+      <div class="checklist-section" id="section-4">
         <h2 style="color: #080685;">4. Maintenance & Damage Logs</h2>
         <div class="question-item">
-          <input type="checkbox" id="q4_1"> <label for="q4_1">Are all reported issues documented (leaks, broken items, pest reports)?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q4_1">✅</button>
+            <button class="response-btn no-btn" data-question="q4_1">❌</button>
+          </div>
+          <label>Are all reported issues documented (leaks, broken items, pest reports)?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q4_2"> <label for="q4_2">Is there a response time log for maintenance requests?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q4_2">✅</button>
+            <button class="response-btn no-btn" data-question="q4_2">❌</button>
+          </div>
+          <label>Is there a response time log for maintenance requests?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q4_3"> <label for="q4_3">Are monthly inspection reports submitted?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q4_3">✅</button>
+            <button class="response-btn no-btn" data-question="q4_3">❌</button>
+          </div>
+          <label>Are monthly inspection reports submitted?</label>
         </div>
         
         <div class="benefit-tag">
           <p style="margin-bottom: 0;"><span style="color: #FF5722; font-weight: bold;">🛠 Result:</span> Encourages accountability and avoids repeated tenant complaints being ignored.</p>
         </div>
+        
+        <div class="step-navigation">
+          <button class="pill-button-alternate prev-btn" data-prev="3">Previous</button>
+          <button class="pill-button next-btn" data-next="5">Next Section</button>
+        </div>
       </div>
 
-      <div class="section-divider"></div>
-
       <!-- Section 5 -->
-      <div class="checklist-section">
+      <div class="checklist-section" id="section-5">
         <h2 style="color: #080685;">5. Security Protocols</h2>
         <div class="question-item">
-          <input type="checkbox" id="q5_1"> <label for="q5_1">Are entry/exit times tracked (if there's a digital gate system)?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q5_1">✅</button>
+            <button class="response-btn no-btn" data-question="q5_1">❌</button>
+          </div>
+          <label>Are entry/exit times tracked (if there's a digital gate system)?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q5_2"> <label for="q5_2">Is there a log of visitors and delivery agents?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q5_2">✅</button>
+            <button class="response-btn no-btn" data-question="q5_2">❌</button>
+          </div>
+          <label>Is there a log of visitors and delivery agents?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q5_3"> <label for="q5_3">Are emergency contacts and fire safety equipment available and functional?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q5_3">✅</button>
+            <button class="response-btn no-btn" data-question="q5_3">❌</button>
+          </div>
+          <label>Are emergency contacts and fire safety equipment available and functional?</label>
         </div>
         
         <div class="benefit-tag">
           <p style="margin-bottom: 0;"><span style="color: #080685; font-weight: bold;">🔒 Security metrics = Tenant trust.</span> Boosts your selling point of "safe living."</p>
         </div>
+        
+        <div class="step-navigation">
+          <button class="pill-button-alternate prev-btn" data-prev="4">Previous</button>
+          <button class="pill-button next-btn" data-next="6">Next Section</button>
+        </div>
       </div>
 
-      <div class="section-divider"></div>
-
       <!-- Section 6 -->
-      <div class="checklist-section">
+      <div class="checklist-section" id="section-6">
         <h2 style="color: #080685;">6. Inventory Audit</h2>
         <div class="question-item">
-          <input type="checkbox" id="q6_1"> <label for="q6_1">Are furniture and appliances per room listed digitally?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q6_1">✅</button>
+            <button class="response-btn no-btn" data-question="q6_1">❌</button>
+          </div>
+          <label>Are furniture and appliances per room listed digitally?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q6_2"> <label for="q6_2">Are missing items flagged and followed up?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q6_2">✅</button>
+            <button class="response-btn no-btn" data-question="q6_2">❌</button>
+          </div>
+          <label>Are missing items flagged and followed up?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q6_3"> <label for="q6_3">Do room inspections match inventory logs?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q6_3">✅</button>
+            <button class="response-btn no-btn" data-question="q6_3">❌</button>
+          </div>
+          <label>Do room inspections match inventory logs?</label>
         </div>
         
         <div class="benefit-tag">
           <p style="margin-bottom: 0;"><span style="color: #921813; font-weight: bold;">📦 Why it matters:</span> Prevents "item recycling" (taking items from one room to cover for another).</p>
         </div>
+        
+        <div class="step-navigation">
+          <button class="pill-button-alternate prev-btn" data-prev="5">Previous</button>
+          <button class="pill-button next-btn" data-next="7">Next Section</button>
+        </div>
       </div>
 
-      <div class="section-divider"></div>
-
       <!-- Section 7 -->
-      <div class="checklist-section">
+      <div class="checklist-section" id="section-7">
         <h2 style="color: #080685;">7. Manager Performance Report</h2>
         <div class="question-item">
-          <input type="checkbox" id="q7_1"> <label for="q7_1">Has the manager submitted their monthly summary via Presto Stay?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q7_1">✅</button>
+            <button class="response-btn no-btn" data-question="q7_1">❌</button>
+          </div>
+          <label>Has the manager submitted their monthly summary via Presto Stay?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q7_2"> <label for="q7_2">Are there unresolved tenant complaints?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q7_2">✅</button>
+            <button class="response-btn no-btn" data-question="q7_2">❌</button>
+          </div>
+          <label>Are there unresolved tenant complaints?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q7_3"> <label for="q7_3">Are regular digital audits being completed?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q7_3">✅</button>
+            <button class="response-btn no-btn" data-question="q7_3">❌</button>
+          </div>
+          <label>Are regular digital audits being completed?</label>
         </div>
         
         <div class="benefit-tag">
           <p style="margin-bottom: 0;"><span style="color: #080685; font-weight: bold;">📊 Transparency in performance = fewer thefts.</span> Lets owners hold managers accountable.</p>
         </div>
+        
+        <div class="step-navigation">
+          <button class="pill-button-alternate prev-btn" data-prev="6">Previous</button>
+          <button class="pill-button next-btn" data-next="8">Next Section</button>
+        </div>
       </div>
 
-      <div class="section-divider"></div>
-
       <!-- Section 8 -->
-      <div class="checklist-section">
+      <div class="checklist-section" id="section-8">
         <h2 style="color: #080685;">8. Legal & Policy Compliance</h2>
         <div class="question-item">
-          <input type="checkbox" id="q8_1"> <label for="q8_1">Are tenancy agreements signed digitally?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q8_1">✅</button>
+            <button class="response-btn no-btn" data-question="q8_1">❌</button>
+          </div>
+          <label>Are tenancy agreements signed digitally?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q8_2"> <label for="q8_2">Are eviction protocols documented and policy-based?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q8_2">✅</button>
+            <button class="response-btn no-btn" data-question="q8_2">❌</button>
+          </div>
+          <label>Are eviction protocols documented and policy-based?</label>
         </div>
         <div class="question-item">
-          <input type="checkbox" id="q8_3"> <label for="q8_3">Are all rules visible in tenant dashboards?</label>
+          <div class="response-buttons">
+            <button class="response-btn yes-btn" data-question="q8_3">✅</button>
+            <button class="response-btn no-btn" data-question="q8_3">❌</button>
+          </div>
+          <label>Are all rules visible in tenant dashboards?</label>
         </div>
         
         <div class="benefit-tag">
           <p style="margin-bottom: 0;"><span style="color: #FF5722; font-weight: bold;">⚖️ Standardized rules</span> reduce disputes and legal loopholes.</p>
         </div>
+        
+        <div class="step-navigation">
+          <button class="pill-button-alternate prev-btn" data-prev="7">Previous</button>
+          <button class="pill-button next-btn" data-next="9">See Results</button>
+        </div>
       </div>
 
-      <div class="section-divider"></div>
-
-      <!-- Scorecard Section -->
-      <div class="scorecard">
+      <!-- Results Section -->
+      <div class="checklist-section" id="section-9">
         <h2 style="color: #080685; text-align: center;">⭐ Presto Stay Scorecard</h2>
-        <p class="text-center mb-4">After each audit, generate a Scorecard via the Presto Stay dashboard:</p>
+        <p class="text-center mb-4">Based on your responses, here's your hostel audit score:</p>
         
-        <div class="row">
-          <div class="col-md-3">
-            <div class="text-center mb-3">
-              <span class="grade grade-a">A+</span>
-              <p><strong>Fully Compliant</strong></p>
+        <div id="results-container" class="text-center mb-4">
+          <div class="scorecard">
+            <div class="row">
+              <div class="col-md-6 mx-auto">
+                <div class="text-center mb-3">
+                  <span class="grade grade-a" id="final-grade">A+</span>
+                  <h3 id="grade-text"><strong>Fully Compliant</strong></h3>
+                  <p id="grade-description">Your hostel is well-managed and protected against fraud.</p>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="col-md-3">
-            <div class="text-center mb-3">
-              <span class="grade grade-b">B</span>
-              <p><strong>Minor Issues</strong></p>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="text-center mb-3">
-              <span class="grade grade-c">C</span>
-              <p><strong>Action Required</strong></p>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="text-center mb-3">
-              <span class="grade grade-d">D</span>
-              <p><strong>High-Risk</strong><br>Management Review Needed</p>
+            
+            <div class="row mt-4">
+              <div class="col-md-3">
+                <div class="text-center mb-3">
+                  <span class="grade grade-a">A+</span>
+                  <p><strong>Fully Compliant</strong></p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="text-center mb-3">
+                  <span class="grade grade-b">B</span>
+                  <p><strong>Minor Issues</strong></p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="text-center mb-3">
+                  <span class="grade grade-c">C</span>
+                  <p><strong>Action Required</strong></p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="text-center mb-3">
+                  <span class="grade grade-d">D</span>
+                  <p><strong>High-Risk</strong><br>Management Review Needed</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         
         <div class="text-center mt-4">
-          <button class="pill-button" style="background: linear-gradient(to right, #080685, #4CAF50);">Generate My Scorecard</button>
+          <button class="pill-button" onclick="window.print()" style="background: linear-gradient(to right, #080685, #4CAF50);">Print My Results</button>
+        </div>
+        
+        <div class="step-navigation">
+          <button class="pill-button-alternate prev-btn" data-prev="8">Review Answers</button>
+          <button class="pill-button" id="restart-btn">Start New Audit</button>
         </div>
       </div>
 
@@ -314,17 +509,129 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      // Add interactivity to checkboxes
-      document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-          if(this.checked) {
-            this.parentElement.style.color = '#4CAF50';
-            this.parentElement.style.fontWeight = 'bold';
-          } else {
-            this.parentElement.style.color = '';
-            this.parentElement.style.fontWeight = '';
+      // Store responses
+      const responses = {};
+      
+      // Handle section navigation
+      function showSection(sectionNum) {
+        // Hide all sections
+        document.querySelectorAll('.checklist-section').forEach(section => {
+          section.classList.remove('active-section');
+        });
+        
+        // Show the target section
+        document.getElementById(`section-${sectionNum}`).classList.add('active-section');
+        
+        // Update progress dots
+        document.querySelectorAll('.step-dot').forEach(dot => {
+          dot.classList.remove('active');
+        });
+        document.querySelector(`.step-dot[data-step="${sectionNum}"]`).classList.add('active');
+      }
+      
+      // Handle response buttons
+      document.querySelectorAll('.response-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const questionId = this.getAttribute('data-question');
+          const isYes = this.classList.contains('yes-btn');
+          
+          // Remove selected class from both buttons in this question group
+          const parentItem = this.closest('.question-item');
+          parentItem.querySelectorAll('.response-btn').forEach(b => {
+            b.classList.remove('selected');
+          });
+          
+          // Add selected class to clicked button
+          this.classList.add('selected');
+          
+          // Store response
+          responses[questionId] = isYes;
+        });
+      });
+      
+      // Handle next/prev buttons
+      document.querySelectorAll('.next-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const nextSection = this.getAttribute('data-next');
+          showSection(nextSection);
+          
+          // If going to results section, calculate score
+          if (nextSection === '9') {
+            calculateScore();
           }
         });
+      });
+      
+      document.querySelectorAll('.prev-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const prevSection = this.getAttribute('data-prev');
+          showSection(prevSection);
+        });
+      });
+      
+      // Handle step dots for direct navigation
+      document.querySelectorAll('.step-dot').forEach(dot => {
+        dot.addEventListener('click', function() {
+          const step = this.getAttribute('data-step');
+          showSection(step);
+        });
+      });
+      
+      // Calculate score based on responses
+      function calculateScore() {
+        const totalQuestions = 24; // 8 sections with 3 questions each
+        let yesCount = 0;
+        
+        // Count yes responses
+        Object.values(responses).forEach(isYes => {
+          if (isYes) yesCount++;
+        });
+        
+        const percentageYes = (yesCount / totalQuestions) * 100;
+        
+        // Determine grade
+        let grade, gradeText, description;
+        
+        if (percentageYes >= 90) {
+          grade = 'A+';
+          gradeText = 'Fully Compliant';
+          description = 'Your hostel is well-managed and protected against fraud.';
+          document.getElementById('final-grade').className = 'grade grade-a';
+        } else if (percentageYes >= 75) {
+          grade = 'B';
+          gradeText = 'Minor Issues';
+          description = 'Your hostel is mostly secure but has a few areas to improve.';
+          document.getElementById('final-grade').className = 'grade grade-b';
+        } else if (percentageYes >= 60) {
+          grade = 'C';
+          gradeText = 'Action Required';
+          description = 'Your hostel has several vulnerabilities that need attention.';
+          document.getElementById('final-grade').className = 'grade grade-c';
+        } else {
+          grade = 'D';
+          gradeText = 'High-Risk';
+          description = 'Your hostel is at high risk for fraud and theft. Immediate action needed.';
+          document.getElementById('final-grade').className = 'grade grade-d';
+        }
+        
+        // Update results
+        document.getElementById('final-grade').textContent = grade;
+        document.getElementById('grade-text').textContent = gradeText;
+        document.getElementById('grade-description').textContent = description;
+      }
+      
+      // Restart button
+      document.getElementById('restart-btn').addEventListener('click', function() {
+        // Clear all responses
+        Object.keys(responses).forEach(key => delete responses[key]);
+        
+        // Reset all selected buttons
+        document.querySelectorAll('.response-btn').forEach(btn => {
+          btn.classList.remove('selected');
+        });
+        
+        // Go back to first section
+        showSection(1);
       });
     </script>
   </body>
