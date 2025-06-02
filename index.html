@@ -46,8 +46,8 @@
             <h4 style="font-weight: 900; color: blue;">prestostay</h4>
           </a>
           <div>
-            <a href="{{url_for('dashboard')}}"> 
-              <button class="pill-button" onclick="showLoadingScreen()">Dashboard</button>
+            <a href="#footer"> 
+              <button class="pill-button">Contact Us</button>
             </a>  
         </div>
         </nav>
@@ -71,7 +71,7 @@
                         </div>
                         <div class="row" data-aos="fade-up" data-aos-delay="800">
                             <div class="col-md-10" style="margin-bottom: 2vh;">
-                                <a href="{{url_for('recpay')}}" style="width: 100%;">
+                                <a href="#free-offer" style="width: 100%;">
                                     <button class="pill-button" style="width: 100%; background: linear-gradient(to right, #080685, #4CAF50); font-size: 18px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transform: translateY(0); transition: all 0.3s;">🎯 Get Your Free Hostel Audit Checklist</button>
                                 </a>
                                 <p style="font-size: 14px; margin-top: 12px; background-color: rgba(255, 255, 0, 0.2); padding: 8px; border-radius: 5px;">💡 <strong>Discover if your hostel is leaking money</strong> without you knowing.</p>
@@ -283,7 +283,7 @@
         </div>
     </section>
 
-    <section class="free-offer" style="padding: 70px 0; background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%); position: relative;">
+    <section class="free-offer" id="free-offer" style="padding: 70px 0; background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%); position: relative;">
         <div style="position: absolute; top: -30px; left: 50%; transform: translateX(-50%);">
             <div style="width: 60px; height: 60px; background-color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); font-size: 30px;">
                 🎁
@@ -302,7 +302,7 @@
                             <p style="font-size: 18px; color: #555;">We've created a simple checklist to help you spot the red flags of fraud, poor management, and revenue leakage in your hostel.</p>
                         </div>
                         
-                        <form style="position: relative; z-index: 2;">
+                        <!-- <form style="position: relative; z-index: 2;">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -340,8 +340,105 @@
                                     <p style="margin: 0; color: #4CAF50; font-weight: 500;">We'll also send you a short walkthrough of how Presto Stay works for your type of hostel.</p>
                                 </div>
                             </div>
+                        </form> -->
+                        
+<form id="contactForm" style="position: relative; z-index: 2;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label style="font-weight: 500; color: #080685; margin-bottom: 5px;">Hostel Name</label>
+                                        <input type="text" id="hostelName" name="hostelName" class="form-control" style="border-radius: 10px; padding: 12px; border: 1px solid #ddd; background-color: #f9f9f9;" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label style="font-weight: 500; color: #080685; margin-bottom: 5px;">Owner Name</label>
+                                        <input type="text" id="ownerName" name="ownerName" class="form-control" style="border-radius: 10px; padding: 12px; border: 1px solid #ddd; background-color: #f9f9f9;" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label style="font-weight: 500; color: #080685; margin-bottom: 5px;">Phone Number</label>
+                                        <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" style="border-radius: 10px; padding: 12px; border: 1px solid #ddd; background-color: #f9f9f9;" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label style="font-weight: 500; color: #080685; margin-bottom: 5px;">Email Address</label>
+                                        <input type="email" id="emailAddress" name="emailAddress" class="form-control" style="border-radius: 10px; padding: 12px; border: 1px solid #ddd; background-color: #f9f9f9;" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <button type="submit" id="submitBtn" class="pill-button" style="width: 100%; background: linear-gradient(to right, #080685, #4CAF50); font-size: 18px; padding: 15px; box-shadow: 0 5px 15px rgba(8, 6, 133, 0.3);">📥 Get the Free Checklist + Demo Invite</button>
+                            </div>
+                            <div id="formMessage" class="mt-3 text-center" style="display: none;"></div>
+                            <div class="mt-3 text-center">
+                                <div style="display: inline-flex; align-items: center; background-color: rgba(76, 175, 80, 0.1); padding: 10px 15px; border-radius: 10px;">
+                                    <span style="font-size: 20px; margin-right: 10px;">💬</span>
+                                    <p style="margin: 0; color: #4CAF50; font-weight: 500;">We'll also send you a short walkthrough of how Presto Stay works for your type of hostel.</p>
+                                </div>
+                            </div>
                         </form>
                         
+                        <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const form = document.getElementById('contactForm');
+                            const formMessage = document.getElementById('formMessage');
+                            const submitBtn = document.getElementById('submitBtn');
+                            
+                            form.addEventListener('submit', function(e) {
+                                e.preventDefault();
+                                
+                                // Disable button and show loading state
+                                submitBtn.disabled = true;
+                                submitBtn.innerHTML = 'Sending...';
+                                
+                                // Get form data
+                                const formData = {
+                                    hostelName: document.getElementById('hostelName').value,
+                                    ownerName: document.getElementById('ownerName').value,
+                                    phoneNumber: document.getElementById('phoneNumber').value,
+                                    emailAddress: document.getElementById('emailAddress').value
+                                };
+                                
+                                // Send data to API
+                                fetch('https://stay.prestoghana.com/api/v1/audit', {
+                                // fetch('https://fd74-154-160-9-11.ngrok-free.app/api/v1/audit', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(formData)
+                                })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Network response was not ok');
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    // Show success message
+                                    formMessage.style.display = 'block';
+                                    formMessage.innerHTML = '<div class="alert alert-success">Thank you! Your checklist is on its way to your email.</div>';
+                                    form.reset();
+                                })
+                                .catch(error => {
+                                    // Show error message
+                                    formMessage.style.display = 'block';
+                                    formMessage.innerHTML = '<div class="alert alert-danger">Sorry, there was a problem submitting your form. Please try again.</div>';
+                                })
+                                .finally(() => {
+                                    // Re-enable button
+                                    submitBtn.disabled = false;
+                                    submitBtn.innerHTML = '📥 Get the Free Checklist + Demo Invite';
+                                });
+                            });
+                        });
+                        </script>
+
                         <div class="text-center mt-4">
                             <div style="display: flex; justify-content: center; align-items: center;">
                                 <div style="display: flex; align-items: center; margin: 0 10px;">
@@ -510,7 +607,7 @@
         </div>
     </section>
 
-    <section class="footer" style="background-color: #080685; color: white; padding-top: 70px;">
+    <section class="footer" id="footer" style="background-color: #080685; color: white; padding-top: 70px;">
       <div class="container">
         <div class="row">
           <div class="col-md-4">
